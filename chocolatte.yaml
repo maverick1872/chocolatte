@@ -1,0 +1,59 @@
+points:
+  key:
+    padding: cy+2 # likely needs updated
+    spread: cx
+
+  zones:
+    matrix:
+      columns:
+        outer:
+        pinky:
+          stagger: 2
+        ring:
+          stagger: 4
+        middle:
+          stagger: 3
+        index:
+          stagger: -2
+        inner:
+          stagger: -2
+      rows:
+        bottom:
+        home:
+        top:
+    thumbfan:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-25, -20]
+      columns:
+        near:
+        home:
+          spread: cx+4
+          stagger: -4
+          rotate: -20
+        far:
+          spread: cx+4
+          stagger: -4
+          rotate: -20
+      rows:
+        thumb:
+
+  mirror:
+    ref: matrix_pinky_home
+    distance: 225
+
+outlines:
+  exports:
+    keys:
+      - type: keys
+        side: left
+        size: 18
+    plate:
+      - type: keys
+        side: left
+        size: 25
+        corner: 4
+
+cases:
+
+pcbs:
