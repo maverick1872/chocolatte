@@ -14,26 +14,57 @@ points:
         type: diode
         params:
           tracks: true
+        anchor:
+          shift: [-8.25, 0]
+          rotate: 90
         nets:
           from: =name
-          to: =row_net
+          to: unknown
+      leds:
+        type: rgb
         anchor:
           shift: [0, -5]
+        nets:
+          din: unknown
+          dout: unknown
+
 
   zones:
     matrix:
       columns:
         outer:
+          rows:
+            top:
+              bind: [9, 0, 0, 0]
         pinky:
           stagger: 2
+          rows:
+            top:
+              bind: [7, 0, 0, 0]
+            bottom:
+              bind: [0, 0, 2, 0]
         ring:
           stagger: 4
+          rows:
+            top:
+              bind: [3, 0, 0, 0]
+            bottom:
+              bind: [0, 0, 6, 0]
         middle:
           stagger: 3
+          rows:
+            bottom:
+              bind: [0, 0, 9, 0]
         index:
           stagger: -2
+          rows:
+            top:
+              bind: [2, 0, 0, 0]
         inner:
           stagger: -2
+          rows:
+            top:
+              bind: [4, 0, 0, 0]
       rows:
         bottom:
         home:
@@ -60,14 +91,39 @@ outlines:
     keys:
       - type: keys
         side: left
-        size: 18
+        size: [18, 17]
     plate:
       - type: keys
         side: left
         size: 25
-        corner: 4
-    pcb_edgecut:
+        corner: 3
+    promicro_space:
+      - type: rectangle
+        anchor:
+          - ref: matrix_middle_top
+            shift: [0, (cy/2) + 4 ]
+            rotate: 270
+        size: [82,70.65]
+        corner: 3
+    fill_notch:
+      - type: rectangle
+        anchor:
+          - ref: thumbfan_far_thumb
+            rotate: 40
+            shift: [4,5.1]
+        size: 10
+    merged:
+      - type: outline # keys
+        name: plate
+      - type: outline
+        name: promicro_space
+      - type: outline
+        name: fill_notch
+        operation: add
 
+    pcb_edgecut:
+      - type: outline
+        name: merged
 
 cases:
 
@@ -89,6 +145,8 @@ pcbs:
         outline: pcb_edgecut
     footprints:
       - type: rotary
+        params:
+          reverse: true
         anchor:
           - ref: matrix_inner_bottom
             shift: [20, -14]
@@ -99,20 +157,41 @@ pcbs:
           A: undefined
           B: GND
           C: undefined
+
       - type: trrs
         anchor:
           - ref: matrix_inner_bottom
-            shift: [28, 5]
+            shift: [32, 8]
             rotate: -90
         nets:
           A: GND
           B: GND
           C: D2
           D: VCC
+
+      #      - type: oled # 4 pin oled; need to find 5pin footprint
+      #        anchor:
+      #          - ref: matrix_inner_top
+      #            shift: [50, 0]
+      #            rotate: 90
+      #        nets:
+      #          SDA: undefined,
+      #          SCL: undefined,
+      #          VCC: undefined,
+      #          GND: undefined,
+      #
+      #      - type: rgb
+      #        anchor:
+      #          - ref: matrix_inner_top
+      #            shift: [75, 0]
+      #        nets:
+      #          dout: undefined,
+      #          din: undefined
+
       - type: promicro
         anchor:
           - ref: matrix_inner_home
-            shift: [19, 12]
+            shift: [20, 15.5]
             rotate: -90
         nets:
           P1: matrix_outer_bottom
