@@ -66,6 +66,8 @@ outlines:
         side: left
         size: 25
         corner: 4
+    pcb_edgecut:
+
 
 cases:
 
@@ -82,6 +84,9 @@ cases:
 # Support for Nice!View
 pcbs:
   cholatte:
+    outlines:
+      pcb_outline_name:
+        outline: pcb_edgecut
     footprints:
       - type: rotary
         anchor:
