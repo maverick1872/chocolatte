@@ -81,7 +81,7 @@ cases:
 # Support for Roller encoder, 1/side (EVQWGD001) (default support in ergogen)
 # Support for Nice!View
 pcbs:
-  cholatte_pcb:
+  cholatte:
     footprints:
       - type: rotary
         anchor:
