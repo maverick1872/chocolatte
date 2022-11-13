@@ -1,7 +1,24 @@
 points:
   key:
-    padding: cy+2 # likely needs updated
-    spread: cx
+    padding: cy
+    footprints:
+      choc:
+        type: choc
+        nets:
+          from: =name
+          to: GND
+        params:
+          keycaps: true
+          reverse: true
+      diode:
+        type: diode
+        params:
+          tracks: true
+        nets:
+          from: =name
+          to: =row_net
+        anchor:
+          shift: [0, -5]
 
   zones:
     matrix:
@@ -38,10 +55,6 @@ points:
       rows:
         thumb:
 
-  mirror:
-    ref: matrix_pinky_home
-    distance: 225
-
 outlines:
   exports:
     keys:
@@ -56,4 +69,65 @@ outlines:
 
 cases:
 
+# VIA footprints may be needed to jump between layers to avoid obstacles
+# Use Blackpill controller to avoid having to leverage a diode matrix
+# Potential for support MakerDiary m.2 bluetooth adapter https://wiki.makerdiary.com/nrf52840-m2
+# USB-C Controller
+# TRRS between halves
+# Ability to make either halve master/slave pair
+# Support for millmax hotswap sockets
+# Support for Kailh hotswap sockets (default support in ergogen)
+# Support for sk6812mini-e leds for easier soldering
+# Support for Roller encoder, 1/side (EVQWGD001) (default support in ergogen)
+# Support for Nice!View
 pcbs:
+  cholatte_pcb:
+    footprints:
+      - type: rotary
+        anchor:
+          - ref: matrix_inner_bottom
+            shift: [20, -14]
+            rotate: -32
+        nets:
+          to: undefined
+          from: undefined
+          A: undefined
+          B: GND
+          C: undefined
+      - type: trrs
+        anchor:
+          - ref: matrix_inner_bottom
+            shift: [28, 5]
+            rotate: -90
+        nets:
+          A: GND
+          B: GND
+          C: D2
+          D: VCC
+      - type: promicro
+        anchor:
+          - ref: matrix_inner_home
+            shift: [19, 12]
+            rotate: -90
+        nets:
+          P1: matrix_outer_bottom
+          P2: matrix_outer_home
+          P3: matrix_outer_top
+          P4: matrix_pinky_bottom
+          P5: matrix_pinky_home
+          P6: matrix_pinky_top
+          P7: matrix_ring_bottom
+          P8: matrix_ring_home
+          P9: matrix_ring_top
+          P10: matrix_middle_bottom
+          P11: matrix_middle_home
+          P12: matrix_middle_top
+          P13: matrix_index_bottom
+          P14: matrix_index_home
+          P15: matrix_index_top
+          P16: matrix_inner_bottom
+          P17: matrix_inner_home
+          P18: matrix_inner_top
+          P19: matrix_thumbfan_near
+          P20: matrix_thumbfan_home
+          P21: matrix_thumbfan_far
