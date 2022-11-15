@@ -128,13 +128,13 @@ outlines:
         fillet: 3
 
 cases:
-  keyboard_stl:
+  chocolatte_plate:
     - name: merged
       operation: add
       extrude: 1
     - name: keys
       operation: subtract
-      extrude: 1
+      extrude: 3
 
 # VIA footprints may be needed to jump between layers to avoid obstacles
 # Use Blackpill controller to avoid having to leverage a diode matrix
