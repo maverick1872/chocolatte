@@ -30,3 +30,4 @@ fp-info-cache
 .idea
 .vscode
 .DS_Store
+node_modules
