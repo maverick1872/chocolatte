@@ -1,6 +1,6 @@
 points:
   key:
-    padding: cx
+    padding: cx+0.5
     footprints:
       choc:
         type: choc
@@ -36,6 +36,7 @@ points:
             top:
               bind: [9, 0, 0, 0]
         pinky:
+          spread: cy+2.5
           stagger: 2
           rows:
             top:
@@ -43,6 +44,7 @@ points:
             bottom:
               bind: [0, 0, 2, 0]
         ring:
+          spread: cy+2.5
           stagger: 4
           rows:
             top:
@@ -50,16 +52,19 @@ points:
             bottom:
               bind: [0, 0, 6, 0]
         middle:
+          spread: cy+2.5
           stagger: 3
           rows:
             bottom:
               bind: [0, 0, 9, 0]
         index:
+          spread: cy+2.5
           stagger: -2
           rows:
             top:
               bind: [2, 0, 0, 0]
         inner:
+          spread: cy+2.5
           stagger: -2
           rows:
             top:
@@ -75,11 +80,11 @@ points:
       columns:
         near:
         home:
-          spread: cx+4
+          spread: cx+5
           stagger: -4
           rotate: -20
         far:
-          spread: cx+4
+          spread: cx+5
           stagger: -4
           rotate: -20
       rows:
@@ -101,7 +106,7 @@ outlines:
       - type: rectangle
         anchor:
           - ref: matrix_middle_top
-            shift: [20, (cy/2) + 4 ]
+            shift: [22.9, (cy/2) + 4 ]
             rotate: 270
         size: [82,57.65]
         corner: 3
@@ -115,6 +120,7 @@ outlines:
     merged:
       - type: outline # keys
         name: plate
+        fillet: 3
       - type: outline
         name: promicro_space
         operation: add
