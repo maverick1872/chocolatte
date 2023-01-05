@@ -1,6 +1,6 @@
 points:
   key:
-    padding: cx+0.5
+    padding: cy
     footprints:
       choc:
         type: choc
@@ -14,61 +14,26 @@ points:
         type: diode
         params:
           tracks: true
-        anchor:
-          shift: [-8.25, 0]
-          rotate: 90
         nets:
           from: =name
           to: unknown
-      leds:
-        type: rgb
         anchor:
           shift: [0, -5]
-        nets:
-          din: unknown
-          dout: unknown
 
   zones:
     matrix:
       columns:
         outer:
-          rows:
-            top:
-              bind: [9, 0, 0, 0]
         pinky:
-          spread: cy+2.5
           stagger: 2
-          rows:
-            top:
-              bind: [7, 0, 0, 0]
-            bottom:
-              bind: [0, 0, 2, 0]
         ring:
-          spread: cy+2.5
           stagger: 4
-          rows:
-            top:
-              bind: [3, 0, 0, 0]
-            bottom:
-              bind: [0, 0, 6, 0]
         middle:
-          spread: cy+2.5
           stagger: 3
-          rows:
-            bottom:
-              bind: [0, 0, 9, 0]
         index:
-          spread: cy+2.5
           stagger: -2
-          rows:
-            top:
-              bind: [2, 0, 0, 0]
         inner:
-          spread: cy+2.5
           stagger: -2
-          rows:
-            top:
-              bind: [4, 0, 0, 0]
       rows:
         bottom:
         home:
@@ -76,15 +41,15 @@ points:
     thumbfan:
       anchor:
         ref: matrix_inner_bottom
-        shift: [-18, -20]
+        shift: [-25, -20]
       columns:
         near:
         home:
-          spread: cx+5
+          spread: cx+4
           stagger: -4
           rotate: -20
         far:
-          spread: cx+5
+          spread: cx+4
           stagger: -4
           rotate: -20
       rows:
@@ -95,52 +60,32 @@ outlines:
     keys:
       - type: keys
         side: left
-        size: [18, 17]
-        bound: false
+        size: 18
     plate:
       - type: keys
         side: left
         size: 25
-        corner: 3
-    promicro_space:
+        corner: 4
+    promicro_mounts:
       - type: rectangle
         anchor:
           - ref: matrix_middle_top
-            shift: [22.9, (cy/2) + 4 ]
+            shift: [0, (cy/2) + 4 ]
             rotate: 270
-        size: [82,57.65]
-        corner: 3
-    fill_notch:
-      - type: rectangle
-        anchor:
-          - ref: thumbfan_far_thumb
-            rotate: 40
-            shift: [4,5.1]
-        size: 10
+        size: [82,70]
+        corner: 4
     merged:
       - type: outline # keys
         name: plate
-        fillet: 3
       - type: outline
-        name: promicro_space
-        operation: add
-      - type: outline
-        name: fill_notch
+        name: promicro_mounts
         operation: add
 
     pcb_edgecut:
       - type: outline
         name: merged
-        fillet: 3
 
 cases:
-  chocolatte_plate:
-    - name: merged
-      operation: add
-      extrude: 1
-    - name: keys
-      operation: subtract
-      extrude: 3
 
 # VIA footprints may be needed to jump between layers to avoid obstacles
 # Use Blackpill controller to avoid having to leverage a diode matrix
@@ -150,7 +95,7 @@ cases:
 # Ability to make either halve master/slave pair
 # Support for millmax hotswap sockets
 # Support for Kailh hotswap sockets (default support in ergogen)
-# Support for sk6812mini-e leds for easier soldering
+# Support for sk6812mini-e.js leds for easier soldering
 # Support for Roller encoder, 1/side (EVQWGD001) (default support in ergogen)
 # Support for Nice!View
 pcbs:
@@ -160,12 +105,10 @@ pcbs:
         outline: pcb_edgecut
     footprints:
       - type: rotary
-        params:
-          reverse: true
         anchor:
           - ref: matrix_inner_bottom
-            shift: [20, -12]
-            rotate: -30
+            shift: [20, -14]
+            rotate: -32
         nets:
           to: undefined
           from: undefined
@@ -176,7 +119,7 @@ pcbs:
       - type: trrs
         anchor:
           - ref: matrix_inner_bottom
-            shift: [32, 8]
+            shift: [34, 5]
             rotate: -90
         nets:
           A: GND
@@ -184,29 +127,21 @@ pcbs:
           C: D2
           D: VCC
 
-      #      - type: oled # 4 pin oled; need to find 5pin footprint
-      #        anchor:
-      #          - ref: matrix_inner_top
-      #            shift: [50, 0]
-      #            rotate: 90
-      #        nets:
-      #          SDA: undefined,
-      #          SCL: undefined,
-      #          VCC: undefined,
-      #          GND: undefined,
-      #
-      #      - type: rgb
-      #        anchor:
-      #          - ref: matrix_inner_top
-      #            shift: [75, 0]
-      #        nets:
-      #          dout: undefined,
-      #          din: undefined
+      - type: oled # 4 pin oled; need to find 5pin footprint
+        anchor:
+          - ref: matrix_inner_top
+            shift: [50, 0]
+            rotate: 90
+        nets:
+          SDA: undefined,
+          SCL: undefined,
+          VCC: undefined,
+          GND: undefined,
 
       - type: promicro
         anchor:
           - ref: matrix_inner_home
-            shift: [20, 15.5]
+            shift: [25, 12]
             rotate: -90
         nets:
           P1: matrix_outer_bottom
