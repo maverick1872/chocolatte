@@ -1,6 +1,6 @@
 points:
   key:
-    padding: cx+0.5
+    padding: cx
     footprints:
       choc:
         type: choc
@@ -36,7 +36,7 @@ points:
             top:
               bind: [9, 0, 0, 0]
         pinky:
-          spread: cy+2.5
+          # spread: cy+2.5
           stagger: 2
           rows:
             top:
@@ -44,7 +44,7 @@ points:
             bottom:
               bind: [0, 0, 2, 0]
         ring:
-          spread: cy+2.5
+          # spread: cy+2.5
           stagger: 4
           rows:
             top:
@@ -52,19 +52,19 @@ points:
             bottom:
               bind: [0, 0, 6, 0]
         middle:
-          spread: cy+2.5
+          # spread: cy+2.5
           stagger: 3
           rows:
             bottom:
               bind: [0, 0, 9, 0]
         index:
-          spread: cy+2.5
+          # spread: cy+2.5
           stagger: -2
           rows:
             top:
               bind: [2, 0, 0, 0]
         inner:
-          spread: cy+2.5
+          # spread: cy+2.5
           stagger: -2
           rows:
             top:
@@ -95,6 +95,11 @@ outlines:
     keys:
       - type: keys
         side: left
+        size: 14
+        bound: false
+    keycaps:
+      - type: keys
+        side: left
         size: [18, 17]
         bound: false
     plate:
@@ -106,7 +111,7 @@ outlines:
       - type: rectangle
         anchor:
           - ref: matrix_middle_top
-            shift: [22.9, (cy/2) + 4 ]
+            shift: [22, (cy/2) + 4 ]
             rotate: 270
         size: [82,57.65]
         corner: 3
