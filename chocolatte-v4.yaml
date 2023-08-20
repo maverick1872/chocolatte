@@ -1,0 +1,251 @@
+points:
+  key:
+    padding: cx
+    footprints:
+      choc:
+        type: choc
+        nets:
+          from: =name
+          to: GND
+        params:
+          keycaps: true
+          reverse: true
+      diode:
+        type: diode
+        params:
+          tracks: true
+        anchor:
+          shift: [-8.25, 0]
+          rotate: 90
+        nets:
+          from: =name
+          to: unknown
+      leds:
+        type: rgb
+        anchor:
+          shift: [0, -5]
+        nets:
+          din: unknown
+          dout: unknown
+
+  zones:
+    matrix:
+      columns:
+        outer:
+          rows:
+            top:
+              bind: [9, 0, 0, 0]
+        pinky:
+          # spread: cy+2.5
+          key:
+            stagger: 2
+          rows:
+            top:
+              bind: [7, 0, 0, 0]
+            bottom:
+              bind: [0, 0, 2, 0]
+        ring:
+          # spread: cy+2.5
+          key:
+            stagger: 4
+          rows:
+            top:
+              bind: [3, 0, 0, 0]
+            bottom:
+              bind: [0, 0, 6, 0]
+        middle:
+          # spread: cy+2.5
+          key:
+            stagger: 3
+          rows:
+            bottom:
+              bind: [0, 0, 9, 0]
+        index:
+          # spread: cy+2.5
+          key:
+            stagger: -2
+          rows:
+            top:
+              bind: [2, 0, 0, 0]
+        inner:
+          # spread: cy+2.5
+          key:
+            stagger: -2
+          rows:
+            top:
+              bind: [4, 0, 0, 0]
+      rows:
+        bottom:
+        home:
+        top:
+    thumbfan:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-18, -20]
+      columns:
+        near:
+        home:
+          key:
+            spread: cx+5
+            stagger: -4
+            splay: -20
+        far:
+          key:
+            spread: cx+5
+            stagger: -4
+            splay: -20
+      rows:
+        thumb:
+
+outlines:
+  keys:
+    - what: rectangle
+      where: true
+#      side: left
+      size: 14
+      bound: false
+  keycaps:
+    - what: rectangle
+      where: true
+#      side: left
+      size: [18, 17]
+      bound: false
+  plate:
+    - what: rectangle
+      where: true
+#      side: left
+      size: 25
+      corner: 3
+  promicro_space:
+    - what: rectangle
+      where: true
+      adjust:
+        - ref: matrix_middle_top
+          shift: [22, (cy/2) + 4 ]
+          rotate: 270
+      size: [82,57.65]
+      corner: 3
+  fill_notch:
+    - what: rectangle
+      where: true
+      adjust:
+        - ref: thumbfan_far_thumb
+          rotate: 40
+          shift: [4,5.1]
+      size: 10
+  merged:
+    - what: rectangle # keys
+#      name: plate
+      where: true
+      fillet: 3
+    - what: rectangle
+#      name: promicro_space
+      where: true
+      operation: add
+    - what: rectangle
+      where: true
+#      name: fill_notch
+      operation: add
+
+  pcb_edgecut:
+    - what: rectangle
+#      name: merged
+      fillet: 3
+
+# cases:
+#   chocolatte_plate:
+#     - name: merged
+#       operation: add
+#       extrude: 1
+#     - name: keys
+#       operation: subtract
+#       extrude: 3
+#
+# VIA footprints may be needed to jump between layers to avoid obstacles
+# Use Blackpill controller to avoid having to leverage a diode matrix
+# Potential for support MakerDiary m.2 bluetooth adapter https://wiki.makerdiary.com/nrf52840-m2
+# USB-C Controller
+# TRRS between halves
+# Ability to make either halve master/slave pair
+# Support for millmax hotswap sockets
+# Support for Kailh hotswap sockets (default support in ergogen)
+# Support for sk6812mini-e leds for easier soldering
+# Support for Roller encoder, 1/side (EVQWGD001) (default support in ergogen)
+# Support for Nice!View
+# pcbs:
+#   cholatte:
+#     outlines:
+#       pcb_outline_name:
+#         outline: pcb_edgecut
+#     footprints:
+#       - type: rotary
+#         params:
+#           reverse: true
+#         anchor:
+#           - ref: matrix_inner_bottom
+#             shift: [20, -12]
+#             rotate: -30
+#         nets:
+#           to: undefined
+#           from: undefined
+#           A: undefined
+#           B: GND
+#           C: undefined
+#
+#       - type: trrs
+#         anchor:
+#           - ref: matrix_inner_bottom
+#             shift: [32, 8]
+#             rotate: -90
+#         nets:
+#           A: GND
+#           B: GND
+#           C: D2
+#           D: VCC
+#
+#       #      - type: oled # 4 pin oled; need to find 5pin footprint
+#       #        anchor:
+#       #          - ref: matrix_inner_top
+#       #            shift: [50, 0]
+#       #            rotate: 90
+#       #        nets:
+#       #          SDA: undefined,
+#       #          SCL: undefined,
+#       #          VCC: undefined,
+#       #          GND: undefined,
+#       #
+#       #      - type: rgb
+#       #        anchor:
+#       #          - ref: matrix_inner_top
+#       #            shift: [75, 0]
+#       #        nets:
+#       #          dout: undefined,
+#       #          din: undefined
+#
+#       - type: promicro
+#         anchor:
+#           - ref: matrix_inner_home
+#             shift: [20, 15.5]
+#             rotate: -90
+#         nets:
+#           P1: matrix_outer_bottom
+#           P2: matrix_outer_home
+#           P3: matrix_outer_top
+#           P4: matrix_pinky_bottom
+#           P5: matrix_pinky_home
+#           P6: matrix_pinky_top
+#           P7: matrix_ring_bottom
+#           P8: matrix_ring_home
+#           P9: matrix_ring_top
+#           P10: matrix_middle_bottom
+#           P11: matrix_middle_home
+#           P12: matrix_middle_top
+#           P13: matrix_index_bottom
+#           P14: matrix_index_home
+#           P15: matrix_index_top
+#           P16: matrix_inner_bottom
+#           P17: matrix_inner_home
+#           P18: matrix_inner_top
+#           P19: matrix_thumbfan_near
+#           P20: matrix_thumbfan_home
+#           P21: matrix_thumbfan_far

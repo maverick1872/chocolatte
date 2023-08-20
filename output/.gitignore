@@ -1,9 +1,0 @@
-# .gitignore sample
-# Ignore all files in this dir...
-*
-!v3/
-!v4/
-
-
-# ... except for this one.
-!.gitignore
