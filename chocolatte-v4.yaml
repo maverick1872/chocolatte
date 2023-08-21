@@ -1,79 +1,48 @@
+units:
+  kx: 18 # key x
+  ky: 17 # key y
+  pinky_stagger: 2
+  ring_stagger: 4
+  middle_stagger: 3
+  index_stagger: -2
+  inner_stagger: -2
+  thumbfan_x_offset: -15
+  thumbfan_y_offset: -20
+  thumbfan_splay: -20
+  thumbfan_stagger: thumbfan_splay/5
+
 points:
   key:
     padding: cx
-    footprints:
-      choc:
-        type: choc
-        nets:
-          from: =name
-          to: GND
-        params:
-          keycaps: true
-          reverse: true
-      diode:
-        type: diode
-        params:
-          tracks: true
-        anchor:
-          shift: [-8.25, 0]
-          rotate: 90
-        nets:
-          from: =name
-          to: unknown
-      leds:
-        type: rgb
-        anchor:
-          shift: [0, -5]
-        nets:
-          din: unknown
-          dout: unknown
 
   zones:
     matrix:
       columns:
         outer:
           rows:
-            top:
-              bind: [9, 0, 0, 0]
+            top.bind: [9, 0, 0, 0]
         pinky:
-          # spread: cy+2.5
-          key:
-            stagger: 2
+          key.stagger: pinky_stagger
           rows:
-            top:
-              bind: [7, 0, 0, 0]
-            bottom:
-              bind: [0, 0, 2, 0]
+            top.bind: [7, 0, 0, 0]
+            bottom.bind: [0, 0, 2, 0]
         ring:
-          # spread: cy+2.5
-          key:
-            stagger: 4
+          key.stagger: ring_stagger
           rows:
-            top:
-              bind: [3, 0, 0, 0]
-            bottom:
-              bind: [0, 0, 6, 0]
+            top.bind: [3, 0, 0, 0]
+            bottom.bind: [0, 0, 6, 0]
         middle:
-          # spread: cy+2.5
-          key:
-            stagger: 3
+          key.stagger: middle_stagger
           rows:
-            bottom:
-              bind: [0, 0, 9, 0]
+            bottom.bind: [0, 0, 9, 0]
         index:
-          # spread: cy+2.5
-          key:
-            stagger: -2
+          key.stagger: index_stagger
           rows:
-            top:
-              bind: [2, 0, 0, 0]
+            top.bind: [2, 0, 0, 0]
         inner:
-          # spread: cy+2.5
-          key:
-            stagger: -2
+          key.stagger: inner_stagger
           rows:
-            top:
-              bind: [4, 0, 0, 0]
+            top.bind: [4, 0, 0, 0]
       rows:
         bottom:
         home:
@@ -81,85 +50,90 @@ points:
     thumbfan:
       anchor:
         ref: matrix_inner_bottom
-        shift: [-18, -20]
+        shift: [thumbfan_x_offset, thumbfan_y_offset]
       columns:
         near:
         home:
-          key:
-            spread: cx+5
-            stagger: -4
-            splay: -20
+          key.spread: cx+5
+          key.stagger: thumbfan_stagger
+          key.splay: thumbfan_splay
         far:
-          key:
-            spread: cx+5
-            stagger: -4
-            splay: -20
+          key.spread: cx+5
+          key.stagger: thumbfan_stagger
+          key.splay: thumbfan_splay
       rows:
         thumb:
 
 outlines:
-  keys:
+  _keys:
     - what: rectangle
       where: true
-#      side: left
       size: 14
       bound: false
-  keycaps:
+
+  _keycaps:
     - what: rectangle
+      corner: 2
       where: true
-#      side: left
-      size: [18, 17]
+      size: [kx, ky]
       bound: false
-  plate:
+
+  thumbfan:
     - what: rectangle
-      where: true
-#      side: left
-      size: 25
-      corner: 3
-  promicro_space:
-    - what: rectangle
-      where: true
       adjust:
-        - ref: matrix_middle_top
-          shift: [22, (cy/2) + 4 ]
-          rotate: 270
-      size: [82,57.65]
-      corner: 3
-  fill_notch:
+        ref: thumbfan_far_thumb
+        rotate: 40
+      size: [kx+8, ky+8]
     - what: rectangle
-      where: true
       adjust:
-        - ref: thumbfan_far_thumb
-          rotate: 40
-          shift: [4,5.1]
-      size: 10
-  merged:
-    - what: rectangle # keys
-#      name: plate
-      where: true
-      fillet: 3
-    - what: rectangle
-#      name: promicro_space
-      where: true
-      operation: add
-    - what: rectangle
-      where: true
-#      name: fill_notch
-      operation: add
+        ref: thumbfan_home_thumb
+        rotate: 20
+      size: [kx+8, ky+8]
+
+  combo: 
+    - _keycaps
+    - thumbfan
+    - -_keycaps
+
+  board:
+    - what: polygon
+      operation: stack
+      points:
+      - ref: matrix_outer_top
+        shift: [-cx/1.5, cy/1.5]
+      - ref: matrix_middle_top
+        shift: [-cx/2, cy/1.5]
+      - ref: matrix_middle_top
+        shift: [cx/2, cy/1.5]
+      - ref: matrix_inner_top
+        shift: [45, cy/1.5]
+      - ref: thumbfan_far_thumb
+        shift: [15, 9]
+      - ref: thumbfan_far_thumb
+        shift: [0, -25]
+      - ref: thumbfan_near_thumb
+        shift: [-cx/2, -cy/1.5]
+      - ref: matrix_outer_bottom
+        shift: [-cx/1.5, -cy/1.5]
 
   pcb_edgecut:
-    - what: rectangle
-#      name: merged
-      fillet: 3
+    - name: board
+      fillet: 5
 
-# cases:
-#   chocolatte_plate:
-#     - name: merged
-#       operation: add
-#       extrude: 1
-#     - name: keys
-#       operation: subtract
-#       extrude: 3
+  pcb_edgecut_keys:
+    - name: pcb_edgecut
+    - operation: subtract
+      name: _keycaps
+
+cases:
+  chocolatte_plate:
+    - name: board
+      operation: add
+      extrude: 1
+    - name: _keys
+      operation: subtract
+      extrude: 3
+
 #
 # VIA footprints may be needed to jump between layers to avoid obstacles
 # Use Blackpill controller to avoid having to leverage a diode matrix
